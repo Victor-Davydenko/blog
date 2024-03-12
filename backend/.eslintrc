@@ -8,6 +8,12 @@
     "max-len": ["error", 150],
     "import/prefer-default-export": "off",
     "import/extensions": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "class-methods-use-this": "off"
+  },
+  "parserOptions": {
+    "es6": true,
+    "ecmaVersion": 13,
+    "sourceType": "module"
   }
 }
