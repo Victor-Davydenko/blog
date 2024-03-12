@@ -5,6 +5,8 @@
   },
   "extends": ["airbnb/base"],
   "rules": {
-    "max-len": ["error", 150]
+    "max-len": ["error", 150],
+    "import/prefer-default-export": "off",
+    "import/extensions": "off"
   }
 }
