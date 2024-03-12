@@ -26,7 +26,7 @@ class UserController {
       const userData = await this.userService.login(credentials);
       res.header('Authorization', `Bearer ${userData.tokens.accessToken}`);
       res.cookie('refresh', userData.tokens.refreshToken, { maxAge: REFRESH_COOKIE_MAX_AGE, httpOnly: true });
-      return res.json({
+      res.json({
         status: 200,
         message: 'User successfully logged in',
         token: userData.tokens.accessToken,
