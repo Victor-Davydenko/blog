@@ -7,6 +7,7 @@
   "rules": {
     "max-len": ["error", 150],
     "import/prefer-default-export": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
