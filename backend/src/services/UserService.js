@@ -3,6 +3,7 @@ import UserDbService from './UserDbService.js';
 import TokenService from './TokenService.js';
 import { UserDTO } from '../dtos/userDTO.js';
 import { USER_ROLES } from '../constants/consts.js';
+import UserApiError from '../exceptions/userApiError.js';
 
 class UserService {
   constructor(userDbService, tokenService) {
@@ -15,7 +16,7 @@ class UserService {
   }) => {
     const candidate = await this.userDbService.findByEmail(email);
     if (candidate) {
-      throw new Error('user already exists');
+      throw UserApiError.UserAlreadyExists();
     }
     const hashedPassword = await bcrypt.hash(password, +process.env.SALT);
     const newUser = await this.userDbService.createUser({
@@ -30,11 +31,11 @@ class UserService {
   login = async ({ username, password }) => {
     const user = await this.userDbService.findByUsername(username);
     if (!user) {
-      throw new Error('Username or password is invalid');
+      throw UserApiError.BadCredentials();
     }
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      throw new Error('Username or password is invalid');
+      throw UserApiError.BadCredentials();
     }
     const userDTO = new UserDTO(user);
     const tokens = await this.tokenService.generateTokens({ ...userDTO });
@@ -46,7 +47,7 @@ class UserService {
 
   refreshToken = async (user) => {
     if (!user) {
-      throw new Error('user is not authenticated');
+      throw UserApiError.UnAuthenticatedError();
     }
 
     const userFromDB = await this.userDbService.findById(user.id);

@@ -1,4 +1,5 @@
 import passport from 'passport';
+import UserApiError from '../exceptions/userApiError.js';
 
 const authMiddleware = (strategyName) => (req, res, next) => {
   passport.authenticate(strategyName, { session: false }, (err, user) => {
@@ -6,7 +7,7 @@ const authMiddleware = (strategyName) => (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      throw new Error('User is not authenticated');
+      throw UserApiError.UnAuthenticatedError();
     }
     req.user = user;
     next();
