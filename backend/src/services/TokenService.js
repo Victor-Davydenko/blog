@@ -9,8 +9,6 @@ class TokenService {
       refreshToken,
     };
   };
-
-  verifyToken = (refreshToken) => jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
 }
 
 export default new TokenService();

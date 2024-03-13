@@ -39,8 +39,8 @@ class UserController {
 
   refreshToken = async (req, res, next) => {
     try {
-      const { refreshToken } = req.cookies;
-      const tokens = await this.userService.refreshToken(refreshToken);
+      const { user } = req;
+      const tokens = await this.userService.refreshToken(user);
       res.header('Authorization', `Bearer ${tokens.accessToken}`);
       res.cookie('refreshToken', tokens.refreshToken, { maxAge: REFRESH_COOKIE_MAX_AGE, httpOnly: true });
       res.json({
