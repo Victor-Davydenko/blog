@@ -9,5 +9,6 @@ const userRouter = Router();
 userRouter.post('/signup', validationMiddleware(createUserValidationSchema), UserController.registration);
 userRouter.post('/login', validationMiddleware(loginUserValidationSchema), UserController.login);
 userRouter.get('/api/refresh', authMiddleware('jwt_refresh'), UserController.refreshToken);
+userRouter.get('/logout', UserController.logout);
 
 export default userRouter;

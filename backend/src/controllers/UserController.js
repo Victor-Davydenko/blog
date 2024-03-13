@@ -52,6 +52,19 @@ class UserController {
       next(e);
     }
   };
+
+  logout = (req, res, next) => {
+    try {
+      res.removeHeader('Authorization');
+      res.clearCookie('refreshToken');
+      res.json({
+        status: 200,
+        message: 'User successfully logged out',
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default new UserController(UserService);
