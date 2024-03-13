@@ -6,6 +6,8 @@ class UserDbService {
   createUser = async (user) => UserModel.create(user);
 
   findByUsername = async (username) => UserModel.findOne({ username });
+
+  findById = async (id) => UserModel.findById(id);
 }
 
 export default new UserDbService();

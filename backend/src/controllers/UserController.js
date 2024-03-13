@@ -25,12 +25,28 @@ class UserController {
       const credentials = req.body;
       const userData = await this.userService.login(credentials);
       res.header('Authorization', `Bearer ${userData.tokens.accessToken}`);
-      res.cookie('refresh', userData.tokens.refreshToken, { maxAge: REFRESH_COOKIE_MAX_AGE, httpOnly: true });
+      res.cookie('refreshToken', userData.tokens.refreshToken, { maxAge: REFRESH_COOKIE_MAX_AGE, httpOnly: true });
       res.json({
         status: 200,
         message: 'User successfully logged in',
         token: userData.tokens.accessToken,
         user: userData.user,
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
+
+  refreshToken = async (req, res, next) => {
+    try {
+      const { refreshToken } = req.cookies;
+      const tokens = await this.userService.refreshToken(refreshToken);
+      res.header('Authorization', `Bearer ${tokens.accessToken}`);
+      res.cookie('refreshToken', tokens.refreshToken, { maxAge: REFRESH_COOKIE_MAX_AGE, httpOnly: true });
+      res.json({
+        status: 200,
+        message: 'User successfully logged in',
+        token: tokens.accessToken,
       });
     } catch (e) {
       next(e);

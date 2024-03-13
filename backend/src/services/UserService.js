@@ -43,6 +43,20 @@ class UserService {
       user: userDTO,
     };
   };
+
+  refreshToken = async (refreshToken) => {
+    if (!refreshToken) {
+      throw new Error('user is not authenticated');
+    }
+    const userData = this.tokenService.verifyToken(refreshToken);
+    if (!userData) {
+      throw new Error('user is not authenticated');
+    }
+    const userFromDB = await this.userDbService.findById(userData.id);
+    const userDTO = new UserDTO(userFromDB);
+    const tokens = await this.tokenService.generateTokens({ ...userDTO });
+    return tokens;
+  };
 }
 
 export default new UserService(UserDbService, TokenService);
