@@ -4,11 +4,13 @@ import TokenService from './TokenService.js';
 import { UserDTO } from '../dtos/userDTO.js';
 import { USER_ROLES } from '../constants/consts.js';
 import UserApiError from '../exceptions/userApiError.js';
+import MailService from './MailService.js';
 
 class UserService {
-  constructor(userDbService, tokenService) {
+  constructor(userDbService, tokenService, mailService) {
     this.userDbService = userDbService;
     this.tokenService = tokenService;
+    this.mailService = mailService;
   }
 
   registration = async ({
@@ -52,9 +54,19 @@ class UserService {
 
     const userFromDB = await this.userDbService.findById(user.id);
     const userDTO = new UserDTO(userFromDB);
-    const tokens = await this.tokenService.generateTokens({ ...userDTO });
+    const tokens = this.tokenService.generateTokens({ ...userDTO });
     return tokens;
+  };
+
+  resetUserPassword = async (email) => {
+    const userData = await this.userDbService.findByEmail(email);
+    if (!userData) {
+      throw UserApiError.BadCredentials();
+    }
+    const userDTO = new UserDTO(userData);
+    const resetPasswordToken = this.tokenService.generateResetPasswordToken({ ...userDTO });
+    await this.mailService.sendResetPasswordEmail('acc.davydenko@gmail.com', resetPasswordToken);
   };
 }
 
-export default new UserService(UserDbService, TokenService);
+export default new UserService(UserDbService, TokenService, MailService);

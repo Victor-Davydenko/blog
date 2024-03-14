@@ -15,7 +15,8 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.29.1",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "pug": "^3.0.2"
   },
   "dependencies": {
     "axios": "^1.6.7",
@@ -26,6 +27,7 @@
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.1",
+    "nodemailer": "^6.9.12",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1"
   }
