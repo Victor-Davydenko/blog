@@ -8,6 +8,8 @@ import { notFoundMiddleware } from './middlewares/notFoundMiddleware.js';
 
 const app = express();
 
+app.set('view engine', 'pug');
+
 app.use(json());
 app.use(cookieParser());
 app.use('/', router);
