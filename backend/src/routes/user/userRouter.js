@@ -10,5 +10,6 @@ userRouter.post('/signup', validationMiddleware(createUserValidationSchema), Use
 userRouter.post('/login', validationMiddleware(loginUserValidationSchema), UserController.login);
 userRouter.get('/api/refresh', authMiddleware('jwt_refresh'), UserController.refreshToken);
 userRouter.get('/logout', UserController.logout);
+userRouter.post('/reset-password', UserController.resetUserPassword);
 
 export default userRouter;

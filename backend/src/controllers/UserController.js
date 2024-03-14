@@ -65,6 +65,19 @@ class UserController {
       next(e);
     }
   };
+
+  resetUserPassword = async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      await this.userService.resetUserPassword(email);
+      res.json({
+        status: 200,
+        message: `Email with instructions for resetting password has been sent to ${email}`,
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default new UserController(UserService);
