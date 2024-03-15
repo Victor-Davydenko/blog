@@ -71,6 +71,7 @@ class UserService {
   setNewUserPassword = async (userId, password) => {
     const hashedPassword = await bcrypt.hash(password, +process.env.SALT);
     await this.userDbService.findByIdAndUpdate(userId, { password: hashedPassword });
+    await this.mailService.sendChangedPasswordNotification('acc.davydenko@gmail.com');
   };
 }
 
