@@ -32,6 +32,16 @@ class MailService {
       html,
     });
   };
+
+  sendChangedPasswordNotification = async (to) => {
+    const html = this.generateEmail('changedEmailNotification.pug');
+    await this.transporter.sendMail({
+      from: process.env.MAILER_EMAIL,
+      to,
+      subject: 'Your password has been changed',
+      html,
+    });
+  };
 }
 
 export default new MailService();
