@@ -67,6 +67,11 @@ class UserService {
     const resetPasswordToken = this.tokenService.generateResetPasswordToken({ ...userDTO });
     await this.mailService.sendResetPasswordEmail('acc.davydenko@gmail.com', resetPasswordToken);
   };
+
+  setNewUserPassword = async (userId, password) => {
+    const hashedPassword = await bcrypt.hash(password, +process.env.SALT);
+    await this.userDbService.findByIdAndUpdate(userId, { password: hashedPassword });
+  };
 }
 
 export default new UserService(UserDbService, TokenService, MailService);

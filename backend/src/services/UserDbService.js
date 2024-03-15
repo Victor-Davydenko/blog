@@ -8,6 +8,8 @@ class UserDbService {
   findByUsername = async (username) => UserModel.findOne({ username });
 
   findById = async (id) => UserModel.findById(id);
+
+  findByIdAndUpdate = async (id, data) => UserModel.findByIdAndUpdate(id, data);
 }
 
 export default new UserDbService();

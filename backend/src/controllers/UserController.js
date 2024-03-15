@@ -78,6 +78,20 @@ class UserController {
       next(e);
     }
   };
+
+  newUserPassword = async (req, res, next) => {
+    try {
+      const { user } = req;
+      const { password } = req.body;
+      await this.userService.setNewUserPassword(user.id, password);
+      res.status(201).json({
+        status: 201,
+        message: 'Password successfully updated',
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default new UserController(UserService);
