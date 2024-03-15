@@ -27,3 +27,13 @@ export const loginUserValidationSchema = Joi.object({
   password: Joi.string()
     .required(),
 });
+
+export const updatePasswordValidationSchema = Joi.object({
+  password: Joi.string()
+    .alphanum()
+    .min(7)
+    .max(16)
+    .required(),
+
+  repeat: Joi.ref('password'),
+}).with('password', 'repeat');
