@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     type: String,
     default: USER_ROLES.user,
   },
+  avatar: String,
 });
 
 export const UserModel = mongoose.model('User', UserSchema);
