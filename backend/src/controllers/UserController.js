@@ -92,6 +92,20 @@ class UserController {
       next(e);
     }
   };
+
+  uploadAvatar = async (req, res, next) => {
+    try {
+      const { file, user } = req;
+      const avatar = await this.userService.uploadAvatar(user.id, file);
+      res.status(201).json({
+        status: 201,
+        message: 'Avatar has been uploaded successfully',
+        avatar,
+      });
+    } catch (e) {
+      next();
+    }
+  };
 }
 
 export default new UserController(UserService);

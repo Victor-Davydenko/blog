@@ -1,16 +1,21 @@
 import bcrypt from 'bcrypt';
+import path from 'node:path';
+import fs from 'node:fs';
 import UserDbService from './UserDbService.js';
 import TokenService from './TokenService.js';
 import { UserDTO } from '../dtos/userDTO.js';
 import { USER_ROLES } from '../constants/consts.js';
 import UserApiError from '../exceptions/userApiError.js';
 import MailService from './MailService.js';
+import ConvertImageService from './ConvertImageService.js';
+import { checkFolderExists } from '../utils/checkExistense.js';
 
 class UserService {
-  constructor(userDbService, tokenService, mailService) {
+  constructor(userDbService, tokenService, mailService, convertImageService) {
     this.userDbService = userDbService;
     this.tokenService = tokenService;
     this.mailService = mailService;
+    this.convertImageService = convertImageService;
   }
 
   registration = async ({
@@ -73,6 +78,23 @@ class UserService {
     await this.userDbService.findByIdAndUpdate(userId, { password: hashedPassword });
     await this.mailService.sendChangedPasswordNotification('acc.davydenko@gmail.com');
   };
+
+  uploadAvatar = async (userId, file) => {
+    await this.deleteAvatar(userId);
+    const avatar = await this.convertImageService.convertToWebp(file);
+    const user = await this.userDbService.findByIdAndUpdate(userId, { avatar });
+    return user.avatar;
+  };
+
+  deleteAvatar = async (userId) => {
+    const user = await this.userDbService.findById(userId);
+    if (user && user.avatar) {
+      const isFileExists = await checkFolderExists(path.resolve(`public/uploads/${user.avatar}`));
+      if (isFileExists) {
+        fs.unlinkSync(path.resolve(`public/uploads/${user.avatar}`));
+      }
+    }
+  };
 }
 
-export default new UserService(UserDbService, TokenService, MailService);
+export default new UserService(UserDbService, TokenService, MailService, ConvertImageService);

@@ -8,11 +8,11 @@ class ConvertImageService {
   }
 
   convertToWebp = async (file) => {
-    const newFileName = `_${file.filename}`;
+    const newFileName = `_${file.filename}.webp`;
     await this.sharp(file.path)
       .toFormat('webp')
-      .webp({ quality: 10 })
-      .toFile(path.resolve(`public/uploads/${newFileName}.webp`));
+      .webp({ quality: 50 })
+      .toFile(path.resolve(`public/uploads/${newFileName}`));
     fs.unlinkSync(path.resolve(`public/uploads/${file.filename}`));
     return newFileName;
   };
