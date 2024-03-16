@@ -1,6 +1,7 @@
 import express, { json } from 'express';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import path from 'node:path';
 import router from './routes/index.js';
 import authStrategy from './middlewares/passportMiddleware.js';
 import { errorMiddleware } from './middlewares/errorMiddleware.js';
@@ -15,6 +16,7 @@ app.use(cookieParser());
 app.use('/', router);
 app.use(passport.initialize());
 authStrategy(passport);
+app.use(express.static(path.resolve('public/')));
 app.use(notFoundMiddleware, errorMiddleware);
 
 export { app };
