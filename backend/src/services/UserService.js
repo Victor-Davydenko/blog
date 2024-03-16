@@ -5,12 +5,14 @@ import { UserDTO } from '../dtos/userDTO.js';
 import { USER_ROLES } from '../constants/consts.js';
 import UserApiError from '../exceptions/userApiError.js';
 import MailService from './MailService.js';
+import ConvertImageService from './ConvertImageService.js';
 
 class UserService {
-  constructor(userDbService, tokenService, mailService) {
+  constructor(userDbService, tokenService, mailService, convertImageService) {
     this.userDbService = userDbService;
     this.tokenService = tokenService;
     this.mailService = mailService;
+    this.convertImageService = convertImageService;
   }
 
   registration = async ({
@@ -73,6 +75,11 @@ class UserService {
     await this.userDbService.findByIdAndUpdate(userId, { password: hashedPassword });
     await this.mailService.sendChangedPasswordNotification('acc.davydenko@gmail.com');
   };
+
+  uploadAvatar = async (userId, file) => {
+    const fileName = await this.convertImageService.convertToWebp(file);
+    await this.userDbService.findByIdAndUpdate(userId, { avatar: fileName });
+  };
 }
 
-export default new UserService(UserDbService, TokenService, MailService);
+export default new UserService(UserDbService, TokenService, MailService, ConvertImageService);
