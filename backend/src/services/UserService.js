@@ -95,6 +95,18 @@ class UserService {
       }
     }
   };
+
+  updateProfile = async (body, id, file) => {
+    let user;
+    if (file) {
+      await this.deleteAvatar(id);
+      const avatar = await this.convertImageService.convertToWebp(file);
+      user = await this.userDbService.findByIdAndUpdate(id, { ...body, avatar });
+    } else {
+      user = await this.userDbService.findByIdAndUpdate(id, { ...body });
+    }
+    return new UserDTO(user);
+  };
 }
 
 export default new UserService(UserDbService, TokenService, MailService, ConvertImageService);

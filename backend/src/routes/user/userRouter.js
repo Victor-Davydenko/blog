@@ -19,5 +19,6 @@ userRouter.get('/logout', UserController.logout);
 userRouter.post('/reset-password', UserController.resetUserPassword);
 userRouter.post('/new-password', [validationMiddleware(updatePasswordValidationSchema), authMiddleware('jwt_reset')], UserController.newUserPassword);
 userRouter.post('/avatar', [authMiddleware('jwt_access'), uploadMedia(imageFileFilter).single('avatar')], UserController.uploadAvatar);
+userRouter.patch('/update-profile', [authMiddleware('jwt_access'), uploadMedia(imageFileFilter).single('avatar')], UserController.updateProfile);
 
 export default userRouter;

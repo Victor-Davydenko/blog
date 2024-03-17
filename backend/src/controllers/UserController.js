@@ -106,6 +106,21 @@ class UserController {
       next();
     }
   };
+
+  updateProfile = async (req, res, next) => {
+    try {
+      const { user: { id } } = req;
+      const { body, file } = req;
+      const user = await this.userService.updateProfile(body, id, file);
+      res.json({
+        status: 200,
+        message: 'User profile has been updated successfully',
+        user,
+      });
+    } catch (e) {
+      next();
+    }
+  };
 }
 
 export default new UserController(UserService);
