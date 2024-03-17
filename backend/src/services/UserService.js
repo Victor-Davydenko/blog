@@ -35,8 +35,8 @@ class UserService {
     return new UserDTO(newUser);
   };
 
-  login = async ({ username, password }) => {
-    const user = await this.userDbService.findByUsername(username);
+  login = async ({ email, password }) => {
+    const user = await this.userDbService.findByEmail(email);
     if (!user) {
       throw UserApiError.BadCredentials();
     }
@@ -94,6 +94,18 @@ class UserService {
         fs.unlinkSync(path.resolve(`public/uploads/${user.avatar}`));
       }
     }
+  };
+
+  updateProfile = async (body, id, file) => {
+    let user;
+    if (file) {
+      await this.deleteAvatar(id);
+      const avatar = await this.convertImageService.convertToWebp(file);
+      user = await this.userDbService.findByIdAndUpdate(id, { ...body, avatar });
+    } else {
+      user = await this.userDbService.findByIdAndUpdate(id, { ...body });
+    }
+    return new UserDTO(user);
   };
 }
 

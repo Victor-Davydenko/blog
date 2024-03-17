@@ -21,7 +21,7 @@ export const createUserValidationSchema = Joi.object({
 });
 
 export const loginUserValidationSchema = Joi.object({
-  username: Joi.string()
+  email: Joi.string()
     .required(),
 
   password: Joi.string()
