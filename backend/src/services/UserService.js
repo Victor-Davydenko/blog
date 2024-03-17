@@ -35,8 +35,8 @@ class UserService {
     return new UserDTO(newUser);
   };
 
-  login = async ({ username, password }) => {
-    const user = await this.userDbService.findByUsername(username);
+  login = async ({ email, password }) => {
+    const user = await this.userDbService.findByEmail(email);
     if (!user) {
       throw UserApiError.BadCredentials();
     }
