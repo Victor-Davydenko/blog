@@ -107,6 +107,11 @@ class UserService {
     }
     return new UserDTO(user);
   };
+
+  deleteUser = async (id) => {
+    const user = await this.userDbService.deleteUser(id);
+    return user;
+  };
 }
 
 export default new UserService(UserDbService, TokenService, MailService, ConvertImageService);

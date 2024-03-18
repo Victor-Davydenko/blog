@@ -1,3 +1,4 @@
+import { ObjectId } from 'bson';
 import { UserModel } from '../db/models/user.js';
 
 class UserDbService {
@@ -10,6 +11,8 @@ class UserDbService {
   findById = async (id) => UserModel.findById(id);
 
   findByIdAndUpdate = async (id, data) => UserModel.findByIdAndUpdate(id, data, { new: true });
+
+  deleteUser = async (id) => (ObjectId.isValid(id) ? UserModel.findByIdAndDelete(id) : null);
 }
 
 export default new UserDbService();
