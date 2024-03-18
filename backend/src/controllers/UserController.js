@@ -8,8 +8,8 @@ class UserController {
 
   registration = async (req, res, next) => {
     try {
-      const { username, password, email } = req.body;
-      const user = await this.userService.registration({ username, password, email });
+      const { body: userData } = req;
+      const user = await this.userService.registration({ ...userData });
       res.status(201).json({
         status: 201,
         message: 'User has been successfully created!',
@@ -117,6 +117,22 @@ class UserController {
         message: 'User profile has been updated successfully',
         user,
       });
+    } catch (e) {
+      next();
+    }
+  };
+
+  deleteUser = async (req, res, next) => {
+    try {
+      const { params: { id } } = req;
+      const user = await this.userService.deleteUser(id);
+      if (!user) {
+        return res.json({
+          status: 200,
+          message: 'User does not exist',
+        });
+      }
+      res.status(204).json();
     } catch (e) {
       next();
     }
