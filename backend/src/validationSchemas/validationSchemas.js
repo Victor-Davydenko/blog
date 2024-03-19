@@ -37,3 +37,8 @@ export const updatePasswordValidationSchema = Joi.object({
 
   repeat: Joi.ref('password'),
 }).with('password', 'repeat');
+
+export const postValidationSchema = Joi.object({
+  text: Joi.string()
+    .required(),
+});

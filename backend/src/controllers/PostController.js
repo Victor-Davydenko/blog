@@ -23,9 +23,6 @@ class PostController {
     try {
       const { body: comment, user: { id: userId }, files } = req;
       const { params: { id } } = req;
-      console.log({
-        comment, files, id, userId,
-      });
       const newPost = await this.postService.commentPost(comment, files, id, userId);
       res.status(201).json({
         status: 201,

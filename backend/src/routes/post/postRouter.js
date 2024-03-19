@@ -1,12 +1,22 @@
 import { Router } from 'express';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 import PostController from '../../controllers/PostController.js';
-import { uploadMedia } from '../../middlewares/uploadMediaMiddleware.js';
-import { imageFileFilter } from '../../utils/fileFilters.js';
+import { uploadMiddleware } from '../../middlewares/uploadMediaMiddleware.js';
+import { UPLOAD_MEDIA_SETTINGS } from '../../constants/consts.js';
+import { validationMiddleware } from '../../middlewares/validationMiddleware.js';
+import { postValidationSchema } from '../../validationSchemas/validationSchemas.js';
 
 const postRouter = Router();
 
-postRouter.post('/create-post', [authMiddleware('jwt_access'), uploadMedia(imageFileFilter).array('media', 4)], PostController.createPost);
-postRouter.post('/:id/comment', [authMiddleware('jwt_access'), uploadMedia(imageFileFilter).array('media', 4)], PostController.commentPost);
+postRouter.post(
+  '/create-post',
+  [validationMiddleware(postValidationSchema), authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_MEDIA_SETTINGS)],
+  PostController.createPost,
+);
+postRouter.post(
+  '/:id/comment',
+  [validationMiddleware(postValidationSchema), authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_MEDIA_SETTINGS)],
+  PostController.commentPost,
+);
 
 export default postRouter;

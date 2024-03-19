@@ -95,7 +95,8 @@ class UserController {
 
   uploadAvatar = async (req, res, next) => {
     try {
-      const { file, user } = req;
+      const { files, user } = req;
+      const [file] = files;
       const avatar = await this.userService.uploadAvatar(user.id, file);
       res.status(201).json({
         status: 201,
@@ -110,7 +111,8 @@ class UserController {
   updateProfile = async (req, res, next) => {
     try {
       const { user: { id } } = req;
-      const { body, file } = req;
+      const { body, files } = req;
+      const [file] = files;
       const user = await this.userService.updateProfile(body, id, file);
       res.json({
         status: 200,

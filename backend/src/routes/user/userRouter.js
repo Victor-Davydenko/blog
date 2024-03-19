@@ -7,9 +7,9 @@ import {
   updatePasswordValidationSchema,
 } from '../../validationSchemas/validationSchemas.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
-import { uploadMedia } from '../../middlewares/uploadMediaMiddleware.js';
-import { imageFileFilter } from '../../utils/fileFilters.js';
+import { uploadMiddleware } from '../../middlewares/uploadMediaMiddleware.js';
 import { checkIfAllowedDeleteAccount } from '../../middlewares/checkIfAllowedDeleteAccount.js';
+import { UPLOAD_AVATAR_SETTINGS } from '../../constants/consts.js';
 
 const userRouter = Router();
 
@@ -19,8 +19,8 @@ userRouter.get('/api/refresh', authMiddleware('jwt_refresh'), UserController.ref
 userRouter.get('/logout', UserController.logout);
 userRouter.post('/reset-password', UserController.resetUserPassword);
 userRouter.post('/new-password', [validationMiddleware(updatePasswordValidationSchema), authMiddleware('jwt_reset')], UserController.newUserPassword);
-userRouter.post('/avatar', [authMiddleware('jwt_access'), uploadMedia(imageFileFilter).single('avatar')], UserController.uploadAvatar);
-userRouter.patch('/update-profile', [authMiddleware('jwt_access'), uploadMedia(imageFileFilter).single('avatar')], UserController.updateProfile);
+userRouter.post('/avatar', [authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_AVATAR_SETTINGS)], UserController.uploadAvatar);
+userRouter.patch('/update-profile', [authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_AVATAR_SETTINGS)], UserController.updateProfile);
 userRouter.delete('/delete-user/:id', [authMiddleware('jwt_access'), checkIfAllowedDeleteAccount], UserController.deleteUser);
 
 export default userRouter;
