@@ -10,12 +10,12 @@ const postRouter = Router();
 
 postRouter.post(
   '/create-post',
-  [validationMiddleware(postValidationSchema), authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_MEDIA_SETTINGS)],
+  [authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_MEDIA_SETTINGS), validationMiddleware(postValidationSchema)],
   PostController.createPost,
 );
 postRouter.post(
   '/:id/comment',
-  [validationMiddleware(postValidationSchema), authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_MEDIA_SETTINGS)],
+  [authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_MEDIA_SETTINGS), validationMiddleware(postValidationSchema)],
   PostController.commentPost,
 );
 
