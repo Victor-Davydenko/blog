@@ -6,4 +6,4 @@ export const USER_ROLES = {
 
 export const REFRESH_COOKIE_MAX_AGE = 7 * 24 * 60 * 1000; // 7 days
 
-export const MAX_FILE_SIZE_TO_UPLOAD = 100000000; // 100 Mb
+export const MAX_FILE_SIZE_TO_UPLOAD = 50 * 1024 * 1024; // 50 Mb
