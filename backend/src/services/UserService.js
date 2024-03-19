@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import UserDbService from './UserDbService.js';
 import TokenService from './TokenService.js';
 import { UserDTO } from '../dtos/userDTO.js';
-import { USER_ROLES } from '../constants/consts.js';
+import { PATH_TO_UPLOAD_FILES, USER_ROLES } from '../constants/consts.js';
 import UserApiError from '../exceptions/userApiError.js';
 import MailService from './MailService.js';
 import ConvertImageService from './ConvertImageService.js';
@@ -89,9 +89,9 @@ class UserService {
   deleteAvatar = async (userId) => {
     const user = await this.userDbService.findById(userId);
     if (user && user.avatar) {
-      const isFileExists = await checkFolderExists(path.resolve(`public/uploads/${user.avatar}`));
+      const isFileExists = await checkFolderExists(path.resolve(`${PATH_TO_UPLOAD_FILES}${user.avatar}`));
       if (isFileExists) {
-        fs.unlinkSync(path.resolve(`public/uploads/${user.avatar}`));
+        fs.unlinkSync(path.resolve(`${PATH_TO_UPLOAD_FILES}${user.avatar}`));
       }
     }
   };

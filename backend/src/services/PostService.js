@@ -2,6 +2,7 @@ import path from 'node:path';
 import fsPromise from 'fs/promises';
 import PostDbService from './PostDbService.js';
 import ConvertImageService from './ConvertImageService.js';
+import { PATH_TO_UPLOAD_FILES } from '../constants/consts.js';
 
 class PostService {
   constructor(postDbService, convertImageService) {
@@ -14,8 +15,8 @@ class PostService {
       const ext = path.extname(file.originalname);
       if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
         await fsPromise.rename(
-          path.resolve(`public/uploads/${file.filename}`),
-          path.resolve(`public/uploads/${file.filename}${ext}`),
+          path.resolve(`${PATH_TO_UPLOAD_FILES}${file.filename}`),
+          path.resolve(`${PATH_TO_UPLOAD_FILES}${file.filename}${ext}`),
         );
         return file.filename + ext;
       }

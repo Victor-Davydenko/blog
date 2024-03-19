@@ -1,6 +1,7 @@
 import sharp from 'sharp';
 import path from 'node:path';
 import fs from 'node:fs';
+import { PATH_TO_UPLOAD_FILES } from '../constants/consts.js';
 
 class ConvertImageService {
   constructor() {
@@ -12,8 +13,8 @@ class ConvertImageService {
     await this.sharp(file.path)
       .toFormat('webp')
       .webp({ quality: 50 })
-      .toFile(path.resolve(`public/uploads/${newFileName}`));
-    fs.unlinkSync(path.resolve(`public/uploads/${file.filename}`));
+      .toFile(path.resolve(`${PATH_TO_UPLOAD_FILES}${newFileName}`));
+    fs.unlinkSync(path.resolve(`${PATH_TO_UPLOAD_FILES}${file.filename}`));
     return newFileName;
   };
 }
