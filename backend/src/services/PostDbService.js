@@ -15,6 +15,21 @@ class PostDbService {
     }
     return newComment;
   };
+
+  getAllPosts = async (query) => {
+    const { page = 1, limit = 3 } = query;
+    const offset = (+page - 1) * limit;
+    const allPosts = await PostModel.find({})
+      .limit(+limit)
+      .skip(offset)
+      .sort({ createdAt: -1 });
+    const count = await PostModel.countDocuments();
+    const totalPages = Math.ceil(count / limit);
+    return {
+      allPosts,
+      totalPages,
+    };
+  };
 }
 
 export default new PostDbService();

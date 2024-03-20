@@ -33,6 +33,20 @@ class PostController {
       next();
     }
   };
+
+  getAllPosts = async (req, res, next) => {
+    try {
+      const { query } = req;
+      const allPostsData = await this.postService.getAllPosts(query);
+      res.json({
+        status: 200,
+        message: 'Ok',
+        allPostsData,
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default new PostController(PostService);

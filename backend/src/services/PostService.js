@@ -48,6 +48,11 @@ class PostService {
     const newComment = await this.postDbService.comment(comment, postId, userId);
     return newComment;
   };
+
+  getAllPosts = (query) => {
+    const allPostsData = this.postDbService.getAllPosts(query);
+    return allPostsData;
+  };
 }
 
 export default new PostService(PostDbService, ConvertImageService);
