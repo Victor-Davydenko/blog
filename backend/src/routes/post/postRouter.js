@@ -18,5 +18,6 @@ postRouter.post(
   [authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_MEDIA_SETTINGS), validationMiddleware(postValidationSchema)],
   PostController.commentPost,
 );
+postRouter.get('/all-posts', PostController.getAllPosts);
 
 export default postRouter;
