@@ -17,19 +17,21 @@ class PostDbService {
   };
 
   getAllPosts = async (query, authorId) => {
-    const { page = 1, limit = 3 } = query;
+    const { page = 1, limit = 1, tags } = query;
     const offset = (+page - 1) * limit;
-    const filter = authorId ? { author: authorId } : {};
+    const filter = {};
+    if (authorId) {
+      filter.author = authorId;
+    }
+    if (tags) {
+      filter.tags = { $in: tags };
+    }
     const allPosts = await PostModel.find(filter)
+      .populate('comments')
       .limit(+limit)
       .skip(offset)
       .sort({ createdAt: -1 });
-    const count = await PostModel.countDocuments();
-    const totalPages = Math.ceil(count / limit);
-    return {
-      allPosts,
-      totalPages,
-    };
+    return allPosts;
   };
 }
 
