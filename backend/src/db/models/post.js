@@ -5,6 +5,9 @@ const PostSchema = new Schema({
   media: [{
     type: Schema.Types.String,
   }],
+  tags: [
+    { type: Schema.Types.String },
+  ],
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',

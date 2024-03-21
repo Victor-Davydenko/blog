@@ -17,14 +17,14 @@ class PostDbService {
   };
 
   getAllPosts = async (query, authorId) => {
-    const { page = 1, limit = 1, tags } = query;
+    const { page = 1, limit = 200, tag } = query;
     const offset = (+page - 1) * limit;
     const filter = {};
     if (authorId) {
       filter.author = authorId;
     }
-    if (tags) {
-      filter.tags = { $in: tags };
+    if (tag) {
+      filter.tags = { $in: tag };
     }
     const allPosts = await PostModel.find(filter)
       .populate('comments')
