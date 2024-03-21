@@ -9,13 +9,15 @@ import UserApiError from '../exceptions/userApiError.js';
 import MailService from './MailService.js';
 import ConvertImageService from './ConvertImageService.js';
 import { checkFolderExists } from '../utils/checkExistense.js';
+import PostService from './PostService.js';
 
 class UserService {
-  constructor(userDbService, tokenService, mailService, convertImageService) {
+  constructor(userDbService, tokenService, mailService, convertImageService, postService) {
     this.userDbService = userDbService;
     this.tokenService = tokenService;
     this.mailService = mailService;
     this.convertImageService = convertImageService;
+    this.postService = postService;
   }
 
   registration = async ({
@@ -112,6 +114,14 @@ class UserService {
     const user = await this.userDbService.deleteUser(id);
     return user;
   };
+
+  getUserProfile = async (id, query) => {
+    const [user, posts] = await Promise.all([this.userDbService.findById(id), this.postService.getAllPosts(query)]);
+    return {
+      user: new UserDTO(user),
+      posts,
+    };
+  };
 }
 
-export default new UserService(UserDbService, TokenService, MailService, ConvertImageService);
+export default new UserService(UserDbService, TokenService, MailService, ConvertImageService, PostService);
