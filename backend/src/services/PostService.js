@@ -28,13 +28,15 @@ class PostService {
   };
 
   createPost = async (post, files, id) => {
+    const tags = post.text.match(/#[^\s#]*/g);
     if (files) {
       const paths = await this.processPostWithMedia(files);
-      const postWithMedia = { ...post, media: paths };
+      const postWithMedia = { ...post, media: paths, tags };
       const newPost = await this.postDbService.create(postWithMedia, id);
       return newPost;
     }
-    const newPost = await this.postDbService.create(post, id);
+    const postWithTags = { ...post, tags };
+    const newPost = await this.postDbService.create(postWithTags, id);
     return newPost;
   };
 
