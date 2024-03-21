@@ -16,10 +16,11 @@ class PostDbService {
     return newComment;
   };
 
-  getAllPosts = async (query) => {
+  getAllPosts = async (query, authorId) => {
     const { page = 1, limit = 3 } = query;
     const offset = (+page - 1) * limit;
-    const allPosts = await PostModel.find({})
+    const filter = authorId ? { author: authorId } : {};
+    const allPosts = await PostModel.find(filter)
       .limit(+limit)
       .skip(offset)
       .sort({ createdAt: -1 });

@@ -22,5 +22,6 @@ userRouter.post('/new-password', [validationMiddleware(updatePasswordValidationS
 userRouter.post('/avatar', [authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_AVATAR_SETTINGS)], UserController.uploadAvatar);
 userRouter.patch('/update-profile', [authMiddleware('jwt_access'), uploadMiddleware(UPLOAD_AVATAR_SETTINGS)], UserController.updateProfile);
 userRouter.delete('/delete-user/:id', [authMiddleware('jwt_access'), checkIfAllowedDeleteAccount], UserController.deleteUser);
+userRouter.get('/user/:id', UserController.getUserProfile);
 
 export default userRouter;

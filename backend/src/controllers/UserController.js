@@ -139,6 +139,21 @@ class UserController {
       next();
     }
   };
+
+  getUserProfile = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { query } = req;
+      const userProfileData = await this.userService.getUserProfile(id, query);
+      res.json({
+        status: 200,
+        message: 'Ok',
+        userProfileData,
+      });
+    } catch (e) {
+      next();
+    }
+  };
 }
 
 export default new UserController(UserService);
