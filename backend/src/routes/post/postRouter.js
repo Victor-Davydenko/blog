@@ -6,6 +6,7 @@ import { UPLOAD_MEDIA_SETTINGS } from '../../constants/consts.js';
 import { validationMiddleware } from '../../middlewares/validationMiddleware.js';
 import { postValidationSchema } from '../../validationSchemas/validationSchemas.js';
 import { checkIfAllowedDeletePost } from '../../middlewares/checkIfAllowedDeletePost.js';
+import { checkIfAllowedDeleteComment } from '../../middlewares/checkIfAllowedDeleteComment.js';
 
 const postRouter = Router();
 
@@ -22,5 +23,7 @@ postRouter.post(
 postRouter.get('/all-posts', PostController.getAllPosts);
 postRouter.get('/post/:id', PostController.getPost);
 postRouter.delete('/delete-post/:id', [authMiddleware('jwt_access'), checkIfAllowedDeletePost], PostController.deletePost);
+postRouter.get('/comment/:id', PostController.getComment);
+postRouter.delete('/delete-comment/:id', [authMiddleware('jwt_access'), checkIfAllowedDeleteComment], PostController.deleteComment);
 
 export default postRouter;
