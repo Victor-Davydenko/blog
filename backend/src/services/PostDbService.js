@@ -43,6 +43,16 @@ class PostDbService {
   deletePost = async (id) => {
     await PostModel.findByIdAndDelete(id);
   };
+
+  getComment = async (id) => {
+    const comment = CommentModel.findById(id)
+      .populate('comments');
+    return comment;
+  };
+
+  deleteComment = async (id) => {
+    await CommentModel.findByIdAndDelete(id);
+  };
 }
 
 export default new PostDbService();

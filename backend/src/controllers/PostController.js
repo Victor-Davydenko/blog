@@ -71,6 +71,30 @@ class PostController {
       next(e);
     }
   };
+
+  getComment = async (req, res, next) => {
+    try {
+      const { params: { id } } = req;
+      const comment = await this.postService.getComment(id);
+      res.json({
+        status: 200,
+        message: 'Ok',
+        comment,
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
+
+  deleteComment = async (req, res, next) => {
+    try {
+      const { params: { id } } = req;
+      await this.postService.deleteComment(id);
+      res.status(204).json();
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default new PostController(PostService);

@@ -64,6 +64,15 @@ class PostService {
   deletePost = async (id) => {
     await this.postDbService.deletePost(id);
   };
+
+  getComment = async (id) => {
+    const comment = await this.postDbService.getComment(id);
+    return comment;
+  };
+
+  deleteComment = async (id) => {
+    await this.postDbService.deleteComment(id);
+  };
 }
 
 export default new PostService(PostDbService, ConvertImageService);
