@@ -51,9 +51,18 @@ class PostService {
     return newComment;
   };
 
-  getAllPosts = (query) => {
-    const allPostsData = this.postDbService.getAllPosts(query);
+  getAllPosts = async (query) => {
+    const allPostsData = await this.postDbService.getAllPosts(query);
     return allPostsData;
+  };
+
+  getPost = async (id) => {
+    const post = await this.postDbService.getPost(id);
+    return post;
+  };
+
+  deletePost = async (id) => {
+    await this.postDbService.deletePost(id);
   };
 }
 
