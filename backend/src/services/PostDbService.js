@@ -33,6 +33,16 @@ class PostDbService {
       .sort({ createdAt: -1 });
     return allPosts;
   };
+
+  getPost = async (id) => {
+    const post = await PostModel.findById(id)
+      .populate('comments');
+    return post;
+  };
+
+  deletePost = async (id) => {
+    await PostModel.findByIdAndDelete(id);
+  };
 }
 
 export default new PostDbService();
