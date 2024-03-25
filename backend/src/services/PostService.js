@@ -73,6 +73,16 @@ class PostService {
   deleteComment = async (id) => {
     await this.postDbService.deleteComment(id);
   };
+
+  likePost = async (postId, userId) => {
+    const post = await this.postDbService.getPost(postId);
+    const isLiked = post.likes.find((el) => userId === el.toString());
+    if (!isLiked) {
+      await this.postDbService.likePost(postId, userId);
+    } else {
+      await this.postDbService.unlikePost(postId, userId);
+    }
+  };
 }
 
 export default new PostService(PostDbService, ConvertImageService);

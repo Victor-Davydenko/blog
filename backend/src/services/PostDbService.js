@@ -53,6 +53,14 @@ class PostDbService {
   deleteComment = async (id) => {
     await CommentModel.findByIdAndDelete(id);
   };
+
+  likePost = async (postId, userId) => {
+    await PostModel.findByIdAndUpdate(postId, { $push: { likes: userId } });
+  };
+
+  unlikePost = async (postId, userId) => {
+    await PostModel.findByIdAndUpdate(postId, { $pull: { likes: userId } });
+  };
 }
 
 export default new PostDbService();
