@@ -95,6 +95,17 @@ class PostController {
       next(e);
     }
   };
+
+  likePost = async (req, res, next) => {
+    try {
+      const { user: { id: userId } } = req;
+      const { postId } = req.body;
+      await this.postService.likePost(postId, userId);
+      res.status(204).json();
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default new PostController(PostService);
