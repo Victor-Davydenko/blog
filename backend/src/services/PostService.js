@@ -40,17 +40,6 @@ class PostService {
     return newPost;
   };
 
-  commentPost = async (comment, files, postId, userId) => {
-    if (files) {
-      const paths = await this.processPostWithMedia(files);
-      const commentWithMedia = { ...comment, media: paths };
-      const newComment = await this.postDbService.comment(commentWithMedia, postId, userId);
-      return newComment;
-    }
-    const newComment = await this.postDbService.comment(comment, postId, userId);
-    return newComment;
-  };
-
   getAllPosts = async (query) => {
     const allPostsData = await this.postDbService.getAllPosts(query);
     return allPostsData;
@@ -63,15 +52,6 @@ class PostService {
 
   deletePost = async (id) => {
     await this.postDbService.deletePost(id);
-  };
-
-  getComment = async (id) => {
-    const comment = await this.postDbService.getComment(id);
-    return comment;
-  };
-
-  deleteComment = async (id) => {
-    await this.postDbService.deleteComment(id);
   };
 
   likePost = async (postId, userId) => {
