@@ -26,7 +26,8 @@ class PostService {
     return allPostsData;
   };
 
-  getPost = async (id) => {
+  getPost = async (id, userId) => {
+    this.addView(id, userId);
     const post = await this.postDbService.getPost(id);
     return post;
   };
@@ -42,6 +43,14 @@ class PostService {
       await this.postDbService.likePost(postId, userId);
     } else {
       await this.postDbService.unlikePost(postId, userId);
+    }
+  };
+
+  addView = async (postId, userId) => {
+    const post = await this.postDbService.getPost(postId);
+    const isViewedByUser = post.views.find((el) => userId === el.toString());
+    if (!isViewedByUser) {
+      await this.postDbService.addView(postId, userId);
     }
   };
 }

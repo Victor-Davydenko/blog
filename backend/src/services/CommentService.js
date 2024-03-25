@@ -21,7 +21,10 @@ class CommentService {
     return newComment;
   };
 
-  getComment = async (id) => {
+  getComment = async (id, userId) => {
+    if (userId) {
+      this.addView(id, userId);
+    }
     const comment = await this.commentDbService.getComment(id);
     return comment;
   };
@@ -37,6 +40,14 @@ class CommentService {
       await this.commentDbService.likeComment(commentId, userId);
     } else {
       await this.commentDbService.unlikeComment(commentId, userId);
+    }
+  };
+
+  addView = async (commentId, userId) => {
+    const comment = await this.commentDbService.getComment(commentId);
+    const isViewedByUser = comment.views.find((el) => userId === el.toString());
+    if (!isViewedByUser) {
+      await this.commentDbService.addView(commentId, userId);
     }
   };
 }

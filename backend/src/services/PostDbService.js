@@ -38,6 +38,10 @@ class PostDbService {
   unlikePost = async (postId, userId) => {
     await PostModel.findByIdAndUpdate(postId, { $pull: { likes: userId } });
   };
+
+  addView = async (postId, userId) => {
+    await PostModel.findByIdAndUpdate(postId, { $push: { views: userId } });
+  };
 }
 
 export default new PostDbService();

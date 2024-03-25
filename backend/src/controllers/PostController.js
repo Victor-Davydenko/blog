@@ -36,7 +36,8 @@ class PostController {
   getPost = async (req, res, next) => {
     try {
       const { params: { id } } = req;
-      const post = await this.postService.getPost(id);
+      const userId = req?.cookies?.id;
+      const post = await this.postService.getPost(id, userId);
       res.json({
         status: 200,
         message: 'Ok',
