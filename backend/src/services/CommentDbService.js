@@ -23,6 +23,14 @@ class CommentDbService {
   deleteComment = async (id) => {
     await CommentModel.findByIdAndDelete(id);
   };
+
+  likeComment = async (commentId, userId) => {
+    await CommentModel.findByIdAndUpdate(commentId, { $push: { likes: userId } });
+  };
+
+  unlikeComment = async (commentId, userId) => {
+    await CommentModel.findByIdAndUpdate(commentId, { $pull: { likes: userId } });
+  };
 }
 
 export default new CommentDbService();

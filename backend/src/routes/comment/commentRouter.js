@@ -16,4 +16,6 @@ commentRouter.post(
 );
 commentRouter.get('/comment/:id', CommentController.getComment);
 commentRouter.delete('/delete-comment/:id', [authMiddleware('jwt_access'), checkIfAllowedDeleteComment], CommentController.deleteComment);
+commentRouter.patch('/like-comment', authMiddleware('jwt_access'), CommentController.likeComment);
+
 export default commentRouter;
