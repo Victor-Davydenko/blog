@@ -1,8 +1,6 @@
-import path from 'node:path';
-import fsPromise from 'fs/promises';
 import PostDbService from './PostDbService.js';
 import ConvertImageService from './ConvertImageService.js';
-import { PATH_TO_UPLOAD_FILES } from '../constants/consts.js';
+import { processPostWithMedia } from '../utils/proccessFiles.js';
 
 class PostService {
   constructor(postDbService, convertImageService) {
@@ -10,27 +8,10 @@ class PostService {
     this.convertImageService = convertImageService;
   }
 
-  processPostWithMedia = async (files) => {
-    const paths = await Promise.all(files.map(async (file) => {
-      const ext = path.extname(file.originalname);
-      if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-        await fsPromise.rename(
-          path.resolve(`${PATH_TO_UPLOAD_FILES}${file.filename}`),
-          path.resolve(`${PATH_TO_UPLOAD_FILES}${file.filename}${ext}`),
-        );
-        return file.filename + ext;
-      }
-      const imagePath = await this.convertImageService.convertToWebp(file);
-      return imagePath;
-    }));
-
-    return paths;
-  };
-
   createPost = async (post, files, id) => {
     const tags = post.text.match(/#[^\s#]*/g);
     if (files) {
-      const paths = await this.processPostWithMedia(files);
+      const paths = await processPostWithMedia(files);
       const postWithMedia = { ...post, media: paths, tags };
       const newPost = await this.postDbService.create(postWithMedia, id);
       return newPost;
