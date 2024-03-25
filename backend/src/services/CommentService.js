@@ -9,13 +9,15 @@ class CommentService {
   }
 
   commentPost = async (comment, files, postId, userId) => {
+    const tags = comment.text.match(/#[^\s#]*/g);
     if (files) {
       const paths = await processPostWithMedia(files);
-      const commentWithMedia = { ...comment, media: paths };
+      const commentWithMedia = { ...comment, media: paths, tags };
       const newComment = await this.commentDbService.comment(commentWithMedia, postId, userId);
       return newComment;
     }
-    const newComment = await this.commentDbService.comment(comment, postId, userId);
+    const commentWithTags = { ...comment, tags };
+    const newComment = await this.commentDbService.comment(commentWithTags, postId, userId);
     return newComment;
   };
 

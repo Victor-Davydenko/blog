@@ -25,6 +25,9 @@ export const CommentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Comment',
   }],
+  tags: [
+    { type: Schema.Types.String },
+  ],
 }, { timestamps: true });
 
 export const CommentModel = mongoose.model('Comment', CommentSchema);
