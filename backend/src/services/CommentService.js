@@ -27,6 +27,16 @@ class CommentService {
   deleteComment = async (id) => {
     await this.commentDbService.deleteComment(id);
   };
+
+  likeComment = async (commentId, userId) => {
+    const comment = await this.commentDbService.getComment(commentId);
+    const isLiked = comment.likes.find((el) => userId === el.toString());
+    if (!isLiked) {
+      await this.commentDbService.likeComment(commentId, userId);
+    } else {
+      await this.commentDbService.unlikeComment(commentId, userId);
+    }
+  };
 }
 
 export default new CommentService(CommentDbService, ConvertImageService);
