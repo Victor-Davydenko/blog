@@ -23,7 +23,8 @@ class CommentController {
   getComment = async (req, res, next) => {
     try {
       const { params: { id } } = req;
-      const comment = await this.commentService.getComment(id);
+      const userId = req?.cookies?.id;
+      const comment = await this.commentService.getComment(id, userId);
       res.json({
         status: 200,
         message: 'Ok',

@@ -31,6 +31,10 @@ class CommentDbService {
   unlikeComment = async (commentId, userId) => {
     await CommentModel.findByIdAndUpdate(commentId, { $pull: { likes: userId } });
   };
+
+  addView = async (commentId, userId) => {
+    await CommentModel.findByIdAndUpdate(commentId, { $push: { views: userId } });
+  };
 }
 
 export default new CommentDbService();
