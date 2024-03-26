@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input'
+import {setNewPassword} from "../api/api";
 
 
 const NewPassword = () => {
@@ -19,7 +20,7 @@ const NewPassword = () => {
   }
 
   const setNewPasswordHandler = () => {
-    console.log(passwordData)
+    setNewPassword(passwordData, accessToken);
   }
   return (
     <div>
