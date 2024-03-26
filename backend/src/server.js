@@ -13,7 +13,7 @@ const app = express();
 app.set('view engine', 'pug');
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL,
 }));
 app.use(json());
 app.use(cookieParser());
