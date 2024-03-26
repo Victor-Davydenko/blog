@@ -23,10 +23,16 @@ const NewPassword = () => {
     setNewPassword(passwordData, accessToken);
   }
   return (
-    <div>
-      <Input label='Enter new password' name='password' onChange={(e) => passwordInputHandler(e)} />
-      <Input label='Repeat new password' name='repeat' onChange={(e) => passwordInputHandler(e)} />
-      <Button onclick={setNewPasswordHandler}>Set New Password</Button>
+    <div className='page'>
+      <div className="reset_password_form">
+       <div className='form-row'>
+         <Input label='Enter new password' name='password' onChange={(e) => passwordInputHandler(e)} />
+       </div>
+        <div className='form-row'>
+          <Input label='Repeat new password' name='repeat' onChange={(e) => passwordInputHandler(e)} />
+        </div>
+        <Button onclick={setNewPasswordHandler}>Set New Password</Button>
+      </div>
     </div>
   );
 };
