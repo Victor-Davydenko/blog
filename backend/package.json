@@ -7,7 +7,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint_fix": "eslint --fix src/",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "prod": "pm2 start src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +34,7 @@
     "nodemailer": "^6.9.12",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "pm2": "^5.3.1",
     "sharp": "^0.33.2",
     "uuid": "^9.0.1"
   }
