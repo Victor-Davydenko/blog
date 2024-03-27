@@ -7,6 +7,8 @@ import authStrategy from './middlewares/passportMiddleware.js';
 import { errorMiddleware } from './middlewares/errorMiddleware.js';
 import { notFoundMiddleware } from './middlewares/notFoundMiddleware.js';
 
+const { dirname } = import.meta;
+
 const app = express();
 
 app.set('view engine', 'pug');
@@ -16,7 +18,7 @@ app.use(cookieParser());
 app.use('/', router);
 app.use(passport.initialize());
 authStrategy(passport);
-app.use(express.static(path.resolve('public/')));
+app.use(express.static(path.join(dirname, '..', 'public/')));
 app.use(notFoundMiddleware, errorMiddleware);
 
 export { app };
