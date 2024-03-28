@@ -27,7 +27,7 @@ class PostService {
   };
 
   getPost = async (id, userId) => {
-    this.addView(id, userId);
+    await this.addView(id, userId);
     const post = await this.postDbService.getPost(id);
     return post;
   };
