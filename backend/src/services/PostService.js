@@ -1,11 +1,9 @@
 import PostDbService from './PostDbService.js';
-import ConvertImageService from './ConvertImageService.js';
 import { processPostWithMedia } from '../utils/proccessFiles.js';
 
 class PostService {
-  constructor(postDbService, convertImageService) {
+  constructor(postDbService) {
     this.postDbService = postDbService;
-    this.convertImageService = convertImageService;
   }
 
   createPost = async (post, files, id) => {
@@ -59,4 +57,4 @@ class PostService {
   };
 }
 
-export default new PostService(PostDbService, ConvertImageService);
+export default new PostService(PostDbService);
