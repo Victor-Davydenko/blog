@@ -1,11 +1,9 @@
 import PostDbService from './PostDbService.js';
-import ConvertImageService from './ConvertImageService.js';
 import { processPostWithMedia } from '../utils/proccessFiles.js';
 
 class PostService {
-  constructor(postDbService, convertImageService) {
+  constructor(postDbService) {
     this.postDbService = postDbService;
-    this.convertImageService = convertImageService;
   }
 
   createPost = async (post, files, id) => {
@@ -27,7 +25,7 @@ class PostService {
   };
 
   getPost = async (id, userId) => {
-    this.addView(id, userId);
+    await this.addView(id, userId);
     const post = await this.postDbService.getPost(id);
     return post;
   };
@@ -38,21 +36,25 @@ class PostService {
 
   likePost = async (postId, userId) => {
     const post = await this.postDbService.getPost(postId);
-    const isLiked = post.likes.find((el) => userId === el.toString());
-    if (!isLiked) {
-      await this.postDbService.likePost(postId, userId);
-    } else {
-      await this.postDbService.unlikePost(postId, userId);
+    if (post) {
+      const isLiked = post.likes.find((el) => userId === el.toString());
+      if (!isLiked) {
+        await this.postDbService.likePost(postId, userId);
+      } else {
+        await this.postDbService.unlikePost(postId, userId);
+      }
     }
   };
 
   addView = async (postId, userId) => {
     const post = await this.postDbService.getPost(postId);
-    const isViewedByUser = post.views.find((el) => userId === el.toString());
-    if (!isViewedByUser) {
-      await this.postDbService.addView(postId, userId);
+    if (post) {
+      const isViewedByUser = post.views.find((el) => userId === el.toString());
+      if (!isViewedByUser) {
+        await this.postDbService.addView(postId, userId);
+      }
     }
   };
 }
 
-export default new PostService(PostDbService, ConvertImageService);
+export default new PostService(PostDbService);

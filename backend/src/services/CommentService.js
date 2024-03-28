@@ -1,11 +1,9 @@
-import ConvertImageService from './ConvertImageService.js';
 import CommentDbService from './CommentDbService.js';
 import { processPostWithMedia } from '../utils/proccessFiles.js';
 
 class CommentService {
-  constructor(commentDbService, convertImageService) {
+  constructor(commentDbService) {
     this.commentDbService = commentDbService;
-    this.convertImageService = convertImageService;
   }
 
   commentPost = async (comment, files, postId, userId) => {
@@ -23,7 +21,7 @@ class CommentService {
 
   getComment = async (id, userId) => {
     if (userId) {
-      this.addView(id, userId);
+      await this.addView(id, userId);
     }
     const comment = await this.commentDbService.getComment(id);
     return comment;
@@ -35,21 +33,25 @@ class CommentService {
 
   likeComment = async (commentId, userId) => {
     const comment = await this.commentDbService.getComment(commentId);
-    const isLiked = comment.likes.find((el) => userId === el.toString());
-    if (!isLiked) {
-      await this.commentDbService.likeComment(commentId, userId);
-    } else {
-      await this.commentDbService.unlikeComment(commentId, userId);
+    if (comment) {
+      const isLiked = comment.likes.find((el) => userId === el.toString());
+      if (!isLiked) {
+        await this.commentDbService.likeComment(commentId, userId);
+      } else {
+        await this.commentDbService.unlikeComment(commentId, userId);
+      }
     }
   };
 
   addView = async (commentId, userId) => {
     const comment = await this.commentDbService.getComment(commentId);
-    const isViewedByUser = comment.views.find((el) => userId === el.toString());
-    if (!isViewedByUser) {
-      await this.commentDbService.addView(commentId, userId);
+    if (comment) {
+      const isViewedByUser = comment.views.find((el) => userId === el.toString());
+      if (!isViewedByUser) {
+        await this.commentDbService.addView(commentId, userId);
+      }
     }
   };
 }
 
-export default new CommentService(CommentDbService, ConvertImageService);
+export default new CommentService(CommentDbService);

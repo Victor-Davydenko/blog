@@ -16,7 +16,7 @@ class CommentController {
         post: newPost,
       });
     } catch (e) {
-      next();
+      next(e);
     }
   };
 
