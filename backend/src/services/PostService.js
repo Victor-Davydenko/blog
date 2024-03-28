@@ -38,11 +38,13 @@ class PostService {
 
   likePost = async (postId, userId) => {
     const post = await this.postDbService.getPost(postId);
-    const isLiked = post.likes.find((el) => userId === el.toString());
-    if (!isLiked) {
-      await this.postDbService.likePost(postId, userId);
-    } else {
-      await this.postDbService.unlikePost(postId, userId);
+    if (post) {
+      const isLiked = post.likes.find((el) => userId === el.toString());
+      if (!isLiked) {
+        await this.postDbService.likePost(postId, userId);
+      } else {
+        await this.postDbService.unlikePost(postId, userId);
+      }
     }
   };
 
