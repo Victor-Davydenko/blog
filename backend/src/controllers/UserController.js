@@ -84,7 +84,7 @@ class UserController {
     try {
       const { user } = req;
       const { password } = req.body;
-      await this.userService.setNewUserPassword(user.id, password);
+      await this.userService.setNewUserPassword(user.id, password, user.email);
       res.status(201).json({
         status: 201,
         message: 'Password successfully updated',
@@ -130,7 +130,7 @@ class UserController {
       const { params: { id } } = req;
       const user = await this.userService.deleteUser(id);
       if (!user) {
-        return res.json({
+        res.json({
           status: 200,
           message: 'User does not exist',
         });
