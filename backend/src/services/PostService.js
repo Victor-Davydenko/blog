@@ -48,9 +48,11 @@ class PostService {
 
   addView = async (postId, userId) => {
     const post = await this.postDbService.getPost(postId);
-    const isViewedByUser = post.views.find((el) => userId === el.toString());
-    if (!isViewedByUser) {
-      await this.postDbService.addView(postId, userId);
+    if (post) {
+      const isViewedByUser = post.views.find((el) => userId === el.toString());
+      if (!isViewedByUser) {
+        await this.postDbService.addView(postId, userId);
+      }
     }
   };
 }
