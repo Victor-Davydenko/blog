@@ -15,11 +15,12 @@ const NewPassword = () => {
     const passwordData = {
       password,
       repeat: repeatPassword,
-    }
+    };
     setNewPassword(passwordData, accessToken);
     setPassword('');
     setRepeatPassword('');
-  }
+  };
+  
   return (
     <div className='page'>
       <div className="reset_password_form">
