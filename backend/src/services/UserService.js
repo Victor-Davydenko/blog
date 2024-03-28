@@ -72,13 +72,13 @@ class UserService {
     }
     const userDTO = new UserDTO(userData);
     const resetPasswordToken = this.tokenService.generateResetPasswordToken({ ...userDTO });
-    await this.mailService.sendResetPasswordEmail('acc.davydenko@gmail.com', resetPasswordToken);
+    await this.mailService.sendResetPasswordEmail(email, resetPasswordToken);
   };
 
-  setNewUserPassword = async (userId, password) => {
+  setNewUserPassword = async (userId, password, email) => {
     const hashedPassword = await bcrypt.hash(password, +process.env.SALT);
     await this.userDbService.findByIdAndUpdate(userId, { password: hashedPassword });
-    await this.mailService.sendChangedPasswordNotification('acc.davydenko@gmail.com');
+    await this.mailService.sendChangedPasswordNotification(email);
   };
 
   uploadAvatar = async (userId, file) => {
