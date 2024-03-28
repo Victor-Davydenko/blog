@@ -2,6 +2,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import UserDbService from '../services/UserDbService.js';
 import { refreshTokenExtractorFromCookie } from '../utils/refreshTokenExtractorFromCookie.js';
 import { accessTokenExtractorFromRequest } from '../utils/accessTokenExtractorFromRequest.js';
+import { logger } from '../utils/logger.js';
 
 const accessOption = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -31,7 +32,7 @@ const authStrategy = (passport) => {
           done(null, false);
         }
       } catch (e) {
-        console.log(e);
+        logger.error(e.message);
       }
     }),
   );
@@ -48,7 +49,7 @@ const authStrategy = (passport) => {
           done(null, false);
         }
       } catch (e) {
-        console.log(e);
+        logger.error(e.message);
       }
     }),
   );
@@ -65,7 +66,7 @@ const authStrategy = (passport) => {
           done(null, false);
         }
       } catch (e) {
-        console.log(e);
+        logger.error(e.message);
       }
     }),
   );
