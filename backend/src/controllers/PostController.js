@@ -15,7 +15,7 @@ class PostController {
         post: newPost,
       });
     } catch (e) {
-      next();
+      next(e);
     }
   };
 
@@ -44,7 +44,7 @@ class PostController {
         post,
       });
     } catch (e) {
-      next();
+      next(e);
     }
   };
 

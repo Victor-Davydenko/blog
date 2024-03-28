@@ -105,7 +105,7 @@ class UserController {
         avatar,
       });
     } catch (e) {
-      next();
+      next(e);
     }
   };
 
@@ -121,7 +121,7 @@ class UserController {
         user,
       });
     } catch (e) {
-      next();
+      next(e);
     }
   };
 
@@ -137,7 +137,7 @@ class UserController {
       }
       res.status(204).json();
     } catch (e) {
-      next();
+      next(e);
     }
   };
 
@@ -152,7 +152,7 @@ class UserController {
         userProfileData,
       });
     } catch (e) {
-      next();
+      next(e);
     }
   };
 }
