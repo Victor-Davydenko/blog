@@ -7,5 +7,5 @@ const chatRouter = Router();
 chatRouter.post('/new-chat', authMiddleware('jwt_access'), ChatController.newChat);
 chatRouter.get('/chats', authMiddleware('jwt_access'), ChatController.getChats);
 chatRouter.post('/new-message', authMiddleware('jwt_access'), ChatController.newMessage);
-chatRouter.get('/messages', authMiddleware('jwt_access'), ChatController.getMessages);
+chatRouter.get('/messages/:chatId', authMiddleware('jwt_access'), ChatController.getMessages);
 export default chatRouter;
