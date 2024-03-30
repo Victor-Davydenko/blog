@@ -52,7 +52,7 @@ class ChatController {
 
   getMessages = async (req, res, next) => {
     try {
-      const { chatId } = req.body;
+      const { chatId } = req.params;
       const messages = await this.chatService.getMessages(chatId);
       res.json({
         status: 200,
