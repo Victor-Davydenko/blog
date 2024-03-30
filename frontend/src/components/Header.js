@@ -25,6 +25,7 @@ const Header = () => {
             <ul className='nav-list'>
               <li className="nav-list__item"><NavLink to={'/'}>Головна</NavLink></li>
               {!userStore.isAuth && <li className="nav-list__item"><NavLink to={'/auth'}>Sign In</NavLink></li>}
+              {userStore.isAuth && <li className="nav-list__item"><NavLink to={'/messages'}>Messages</NavLink></li>}
             </ul>
           </nav>
           {userStore.isAuth && <Button type='submit' onclick={() => logoutBtnHandler()}>Logout</Button>}

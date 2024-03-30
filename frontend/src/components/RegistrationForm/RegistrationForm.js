@@ -23,11 +23,11 @@ const RegistrationForm = () => {
             label="Ім'я" name='username' type='text'/>
         </div>
         <div className='form-row'>
-          <Input onChange={(e) => setUsername(e.target.value)}
+          <Input onChange={(e) => setEmail(e.target.value)}
             label='Електронна пошта' name='email' type='text'/>
         </div>
         <div className='form-row'>
-          <Input onChange={(e) => setUsername(e.target.value)}
+          <Input onChange={(e) => setPassword(e.target.value)}
             label='Пароль' name='password' type='password'/>
         </div>
         <div className='form-row button-row'>

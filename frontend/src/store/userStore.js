@@ -35,7 +35,6 @@ export default class UserStore {
     this.setError(null);
     try {
       const response = await AuthService.login(email, password);
-      console.log(response.data)
       if (response instanceof AxiosError) {
         this.setError(response.response.data.message);
       }
@@ -78,7 +77,7 @@ export default class UserStore {
 
   async checkAuth() {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URI}/refresh`, { withCredentials: true });
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URI}/api/refresh`, { withCredentials: true });
       localStorage.setItem('accessToken', response.data.accessToken);
       this.setIsAuth(true);
       this.setUser(response.data.user);
