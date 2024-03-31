@@ -1,12 +1,13 @@
 class DbError extends Error {
-  constructor(status = 500, message = 'Something went wrong with fetching data from database...') {
+  constructor(e, status = 500, message = 'Something went wrong with fetching from database:') {
     super(message);
     this.status = status;
     this.message = message;
+    this.e = e;
   }
 
-  static FailedToFetch() {
-    return new DbError();
+  static FailedToFetch(e) {
+    return new DbError(e.reason);
   }
 }
 
