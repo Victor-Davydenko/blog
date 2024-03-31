@@ -15,7 +15,7 @@ class CommentDbService {
       }
       return newComment;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -25,7 +25,7 @@ class CommentDbService {
         .populate('comments');
       return comment;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -34,7 +34,7 @@ class CommentDbService {
       const comment = await CommentModel.findByIdAndDelete(id);
       return comment;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -43,7 +43,7 @@ class CommentDbService {
       const comment = await CommentModel.findByIdAndUpdate(commentId, { $push: { likes: userId } });
       return comment;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -52,7 +52,7 @@ class CommentDbService {
       const comment = await CommentModel.findByIdAndUpdate(commentId, { $pull: { likes: userId } });
       return comment;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -61,7 +61,7 @@ class CommentDbService {
       const comment = await CommentModel.findByIdAndUpdate(commentId, { $push: { views: userId } });
       return comment;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 }
