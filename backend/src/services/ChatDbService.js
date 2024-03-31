@@ -40,7 +40,6 @@ class ChatDbService {
 
   getMessages = async (chatId) => {
     try {
-      console.log(chatId);
       const messages = MessageModel.find({ chatId });
       return messages;
     } catch (e) {

@@ -7,10 +7,13 @@ import router from './routes/index.js';
 import authStrategy from './middlewares/passportMiddleware.js';
 import { errorMiddleware } from './middlewares/errorMiddleware.js';
 import { notFoundMiddleware } from './middlewares/notFoundMiddleware.js';
+import { io } from './socket/index.js';
 
 const { dirname } = import.meta;
 
 const app = express();
+
+io.listen(4000);
 
 app.set('view engine', 'pug');
 app.use(cors({

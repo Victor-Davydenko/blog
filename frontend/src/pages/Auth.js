@@ -5,11 +5,15 @@ import RegistrationForm from '../components/RegistrationForm/RegistrationForm';
 import LoginForm from '../components/LoginForm/LoginForm';
 import Context from '../index';
 import Switcher from '../components/ui/Switcher';
+import {socketContext} from "../socket";
 
 const Auth = () => {
   const { userStore, globalStore } = useContext(Context);
+  const socket = useContext(socketContext);
 
   if (userStore.isAuth) {
+    socket.connect()
+    socket.emit('user_connected', userStore.user.id)
     return (
       <Navigate to={'/'} />
     );
