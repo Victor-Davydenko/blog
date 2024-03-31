@@ -19,8 +19,8 @@ class PostService {
     return newPost;
   };
 
-  getAllPosts = async (query) => {
-    const allPostsData = await this.postDbService.getAllPosts(query);
+  getAllPosts = async (query, userId) => {
+    const allPostsData = await this.postDbService.getAllPosts(query, userId);
     return allPostsData;
   };
 
