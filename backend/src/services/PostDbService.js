@@ -7,7 +7,7 @@ class PostDbService {
       const postData = await PostModel.create({ ...post, author: id });
       return postData;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -29,7 +29,7 @@ class PostDbService {
         .sort({ createdAt: -1 });
       return allPosts;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -39,7 +39,7 @@ class PostDbService {
         .populate('comments');
       return post;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -48,7 +48,7 @@ class PostDbService {
       const post = await PostModel.findByIdAndDelete(id);
       return post;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -57,7 +57,7 @@ class PostDbService {
       const post = await PostModel.findByIdAndUpdate(postId, { $push: { likes: userId } });
       return post;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -66,7 +66,7 @@ class PostDbService {
       const post = await PostModel.findByIdAndUpdate(postId, { $pull: { likes: userId } });
       return post;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -75,7 +75,7 @@ class PostDbService {
       const post = await PostModel.findByIdAndUpdate(postId, { $push: { views: userId } });
       return post;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 }

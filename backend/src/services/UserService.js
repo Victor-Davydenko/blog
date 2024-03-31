@@ -116,9 +116,10 @@ class UserService {
   };
 
   getUserProfile = async (id, query) => {
-    const [user, posts] = await Promise.all([this.userDbService.findById(id), this.postService.getAllPosts(query)]);
+    const [user, posts] = await Promise.all([this.userDbService.findById(id), this.postService.getAllPosts(query, id)]);
+    const foundUser = user ? new UserDTO(user) : null;
     return {
-      user: new UserDTO(user),
+      user: foundUser,
       posts,
     };
   };

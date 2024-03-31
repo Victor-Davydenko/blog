@@ -8,7 +8,7 @@ class UserDbService {
       const user = await UserModel.findOne({ email });
       return user;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -17,7 +17,7 @@ class UserDbService {
       const userData = await UserModel.create(user);
       return userData;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -26,7 +26,7 @@ class UserDbService {
       const user = UserModel.findOne({ username });
       return user;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -35,7 +35,7 @@ class UserDbService {
       const user = await UserModel.findById(id);
       return user;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -44,7 +44,7 @@ class UserDbService {
       const user = await UserModel.findByIdAndUpdate(id, data, { new: true });
       return user;
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 
@@ -52,7 +52,7 @@ class UserDbService {
     try {
       return (ObjectId.isValid(id) ? UserModel.findByIdAndDelete(id) : null);
     } catch (e) {
-      throw DbError.FailedToFetch();
+      throw DbError.FailedToFetch(e);
     }
   };
 }
